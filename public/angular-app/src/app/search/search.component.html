@@ -1,0 +1,14 @@
+<form #searchForm="ngForm" (ngSubmit)="searchEmployees(searchForm)">
+    <input name="name" [(ngModel)]="name">
+    <button>Search</button>
+</form>
+
+<div>
+    <ul>
+        <li *ngFor="let employee of employees">
+            <a [routerLink]="['/employees', employee._id]">
+                {{employee.id}} - {{employee.name}}
+            </a>
+        </li>
+    </ul>
+</div>

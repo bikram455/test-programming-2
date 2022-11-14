@@ -12,10 +12,10 @@ export class EmployeesDataService {
 
   constructor(private http:HttpClient) { }
 
-  public getEmployees(): Observable<Employee[]> {
-    const url: string= this.apiBaseUrl + "/employees";
+  public getEmployees(pageNumber: number): Observable<EmployeeData> {
+    const url: string= this.apiBaseUrl + "/employees?offset=" + pageNumber * 5;
     
-    return this.http.get<Employee[]>(url);
+    return this.http.get<EmployeeData>(url);
   }
 
   public getCity(employeeId: string): Observable<Employee> {
@@ -24,4 +24,20 @@ export class EmployeesDataService {
     return this.http.get<Employee>(url);
   }
 
+  public searchEmployees(name: string): Observable<EmployeeData> {
+    const url = `${this.apiBaseUrl}/employees?name=${name}`;
+    return this.http.get<EmployeeData>(url); 
+  }
+
+  public encryptPassword(employeeId: string): Observable<any> {
+    const url = `${this.apiBaseUrl}/employees/${employeeId}`;
+    return this.http.patch<null>(url, {});
+  }
+}
+class EmployeeData {
+  #count!: number;
+  #employees!: Employee[];
+
+  get count(): number {return this.#count}
+  get employees(): Employee[] {return this.#employees}
 }

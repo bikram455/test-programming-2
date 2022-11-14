@@ -127,21 +127,49 @@ export class Employee {
   styleUrls: ['./employees.component.css']
 })
 export class EmployeesComponent implements OnInit {
-
+  current: number = 0;
+  totalPages!: number;
   employees!: Employee[];
 
   constructor(private employeeService:EmployeesDataService) { }
 
   ngOnInit(): void {
-    this.employeeService.getEmployees().subscribe({
-      next: (employees)=> this.fillEmployees(employees),
-      error: (error)=>{this.employees= []; console.log(error);
-      },
-    });
+    // this.employeeService.getEmployees(this.current).subscribe({
+    //   next: (employees)=> {
+    //     this.totalPages = parseInt((employees['count'] / 5).toString());
+    //     this.fillEmployees(employees['employees'])
+    //   },
+    //   error: (error)=>{this.employees= []; console.log(error);
+    //   },
+    // });
+    this._fetchEmployees();
+  }
+
+  private _fetchEmployees() {
+    this.employeeService.getEmployees(this.current).subscribe(res => {
+      if(res['count'] % 5 == 0) {
+        this.totalPages = res['count'] / 5 - 1;
+      } else {
+        this.totalPages = parseInt((res['count'] / 5).toString());
+      }
+      this.fillEmployees(res['employees']);
+    }, err => {
+      this.employees = [];
+      console.error(err);
+    })
   }
 
   private fillEmployees(employees: Employee[]) {
     this.employees= employees;
   }
 
+  nextpage() {
+    ++this.current;
+    this._fetchEmployees();
+  }
+
+  previousPage() {
+    --this.current;
+    this._fetchEmployees();
+  }
 }

@@ -30,4 +30,13 @@ export class EmployeeComponent implements OnInit {
     
   }
 
+  encryptpassword(): void {
+    const employeeId = this.route.snapshot.params['employeeId'];
+    this.employeeService.encryptPassword(employeeId).subscribe(res => {
+      console.log('Password encrypted successfully!');
+    }, err => {
+      console.error(err);
+    });
+  }
+
 }

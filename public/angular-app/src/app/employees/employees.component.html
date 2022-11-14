@@ -5,3 +5,5 @@ The list of Employees are:<br/>
         <a routerLink="{{employee._id}}">{{employee.id}} - {{employee.name}}</a>
     </li>
 </ul>
+<button [disabled]="current == 0" (click)="previousPage()">Previous</button>
+<button [disabled]="current == totalPages" (click)="nextpage()">Next</button>
