@@ -12,6 +12,7 @@ export class EmployeeComponent implements OnInit {
 
   // employee:Employee= new Employee({_id: "123", employeeId: "123", location: {address: {street1: "", employee: "", state: "", zip: ""}, geo: {}}});
   employee:Employee= new Employee();
+  dob!: Date;
   constructor(private employeeService: EmployeesDataService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -26,6 +27,7 @@ export class EmployeeComponent implements OnInit {
 
   private fillCity(employee: Employee): void {
     this.employee= employee;
+    // this.dob = new Date(employee.dob);
     console.log("this.employee",this.employee);
     
   }
