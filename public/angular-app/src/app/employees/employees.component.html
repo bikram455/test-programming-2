@@ -1,0 +1,7 @@
+The list of Employees are:<br/>
+
+<ul>
+    <li *ngFor="let employee of employees">
+        <a routerLink="{{employee._id}}">{{employee.id}} - {{employee.name}}</a>
+    </li>
+</ul>
