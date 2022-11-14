@@ -13,6 +13,7 @@ export class EmployeeComponent implements OnInit {
   // employee:Employee= new Employee({_id: "123", employeeId: "123", location: {address: {street1: "", employee: "", state: "", zip: ""}, geo: {}}});
   employee:Employee= new Employee();
   dob!: Date;
+  message!: string;
   constructor(private employeeService: EmployeesDataService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -36,6 +37,7 @@ export class EmployeeComponent implements OnInit {
     const employeeId = this.route.snapshot.params['employeeId'];
     this.employeeService.encryptPassword(employeeId).subscribe(res => {
       console.log('Password encrypted successfully!');
+      this.message = res;
     }, err => {
       console.error(err);
     });
